@@ -10,7 +10,6 @@ namespace CLX.Dialogue
         public string clipContext;
         public string roleName;
         public string roleEmotion;
-        public bool   atScreenLeft;
         public int     eventMask;
     }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace CLX.Dialogue
 {
+    /// <summary>
+    /// 角色类 主要包括其名字与其主要图片
+    /// </summary>
     [CreateAssetMenu(menuName = "CLX/Dialogue/Create Role")]
     public class Role : ScriptableObject
     {
