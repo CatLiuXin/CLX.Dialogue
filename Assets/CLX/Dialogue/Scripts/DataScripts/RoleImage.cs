@@ -5,7 +5,7 @@ using UnityEngine;
 namespace CLX.Dialogue
 {
     [System.Serializable]
-    public class DialogueImage
+    public class RoleImage
     {
         public Texture texture;
         public string emotion;
