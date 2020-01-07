@@ -12,16 +12,9 @@ namespace CLX.Dialogue
     {
         public string roleName;
         public List<RoleImage> images;
-        public Dictionary<string, RoleImage> imageDict;
 
         private void OnEnable()
         {
-            /// 初始化字典 便于以后查找
-            imageDict = new Dictionary<string, RoleImage>();
-            foreach(var image in images)
-            {
-                imageDict[image.emotion] = image;
-            }
         }
 
         /// <summary>
@@ -29,7 +22,11 @@ namespace CLX.Dialogue
         /// </summary>
         public RoleImage GetImageByEmotion(string emotion)
         {
-            return imageDict.ContainsKey(emotion) ? imageDict[emotion] : null;
+            foreach(var image in images)
+            {
+                if (image.emotion == emotion) return image;
+            }
+            return null;
         }
     }
 }

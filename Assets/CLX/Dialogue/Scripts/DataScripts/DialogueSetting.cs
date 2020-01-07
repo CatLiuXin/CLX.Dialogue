@@ -11,26 +11,27 @@ namespace CLX.Dialogue
     public class DialogueSetting : ScriptableObject
     {
         public List<Role> roles;
-        private Dictionary<string, Role> roleDict;
         public string[] maskNames;
+
+        /// <summary>
+        /// 编辑器上每行应有的mask数量
+        /// </summary>
         [Range(1, 32)]
         public short maskColumeCount = 4;
-
-        private void OnEnable()
-        {
-            roleDict = new Dictionary<string, Role>();
-            foreach(var role in roles)
-            {
-                roleDict[role.roleName] = role;
-            }
-        }
 
         /// <summary>
         /// 根据roleName查找Role 若没找到则返回null
         /// </summary>
         public Role GetRoleByName(string roleName)
         {
-            return roleDict.ContainsKey(roleName) ? roleDict[roleName] : null;
+            for(int i = 0; i < roles.Count; i++)
+            {
+                if(roles[i] .roleName == roleName)
+                {
+                    return roles[i];
+                }
+            }
+            return null;
         }
     }
 

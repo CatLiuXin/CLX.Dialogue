@@ -26,5 +26,13 @@ namespace CLX.Dialogue
         {
             eventMask &= (~mask);
         }
+
+        public void CopyBy(DialogueClip clip)
+        {
+            clipContext = clip.clipContext;
+            roleName = clip.roleName;
+            roleEmotion = clip.roleEmotion;
+            eventMask = clip.eventMask;
+        }
     }
 }
