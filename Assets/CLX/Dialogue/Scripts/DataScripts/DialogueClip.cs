@@ -11,5 +11,20 @@ namespace CLX.Dialogue
         public string roleName;
         public string roleEmotion;
         public int     eventMask;
+
+        public bool HasMaskBit(int mask)
+        {
+            return (mask & eventMask) == mask;
+        }
+
+        public void AddMaskBit(int mask)
+        {
+            eventMask |= mask;
+        }
+
+        public void RemoveMaskBit(int mask)
+        {
+            eventMask &= (~mask);
+        }
     }
 }

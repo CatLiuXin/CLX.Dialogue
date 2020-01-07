@@ -7,7 +7,7 @@ namespace CLX.Dialogue
     [System.Serializable]
     public class RoleImage
     {
-        public Texture texture;
+        public Sprite sprite;
         public string emotion;
     }
 }

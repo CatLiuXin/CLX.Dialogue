@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Linq;
 using CLX.Extensions.Generic;
+using System.Text;
 
 namespace CLX.Dialogue
 {
@@ -11,6 +12,7 @@ namespace CLX.Dialogue
         Dialogue mDialogue;
 
         bool dialogueLegal = false;
+        int nowDialogueClipNumber = 0;
         string missingName;
 
         public DialogueSetting MSetting {
@@ -24,6 +26,7 @@ namespace CLX.Dialogue
             set {
                 if (mDialogue == value) return;
                 mDialogue = value;
+                nowDialogueClipNumber = 0;
                 if (mDialogue != null)
                 {
                     dialogueLegal = CheckDialogueLegal();
@@ -35,15 +38,17 @@ namespace CLX.Dialogue
         static void Init()
         {
             var window = (DialogueEditor)EditorWindow.GetWindow(typeof(DialogueEditor));
+            window.titleContent = new GUIContent(" CLX.Dialogue可视化编辑器 ");
+            window.minSize = new Vector2(400, 400);
             window.Show();
         }
 
         private void OnGUI()
         {
-            // Title
-            var _labelStyle1 = new GUIStyle(EditorStyles.label);
-            _labelStyle1.fontSize = 24;
-            EditorGUILayout.LabelField("CLX.Dialogue可视化编辑器", _labelStyle1);
+            GUILayout.Space(10);
+            GUI.skin.label.fontSize = 24;
+            GUI.skin.label.alignment = TextAnchor.MiddleCenter;
+            GUILayout.Label(" CLX.Dialogue可视化编辑器 ");
             EditorGUILayout.Space();
             EditorGUILayout.Space();
 
@@ -75,7 +80,68 @@ namespace CLX.Dialogue
 
             #endregion
 
+            /// 获取所有对白片段
+            var clips = MDialogue.dialogueClips;
+            var nowClip = clips[nowDialogueClipNumber];
 
+            #region 验证表情
+            Role nowRole = MSetting.GetRoleByName(nowClip.roleName);
+            RoleImage nowImage = nowRole.GetImageByEmotion(nowClip.roleEmotion);
+            if(nowImage == null)
+            {
+                EditorGUILayout.HelpBox(string.Concat("您所选择的Setting文件中的",nowRole.roleName,
+                    "角色并不包含",nowClip.roleEmotion,"表情"), MessageType.Warning);
+                return;
+            }
+            #endregion
+
+            #region 主体绘制
+            EditorGUILayout.BeginHorizontal();
+            var sprite = nowRole.GetImageByEmotion(nowClip.roleEmotion).sprite;
+            var targetTex = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
+            var pixels = sprite.texture.GetPixels(
+                (int)sprite.textureRect.x,
+                (int)sprite.textureRect.y,
+                (int)sprite.textureRect.width,
+                (int)sprite.textureRect.height);
+            targetTex.SetPixels(pixels);
+            targetTex.Apply();
+
+            GUILayout.Space(10);
+            float scale = Mathf.Min(sprite.textureRect.height / sprite.textureRect.width, 4);
+            GUI.DrawTexture(GUILayoutUtility.GetRect((position.width / 2), 0,
+                GUILayout.MaxHeight(200*scale), GUILayout.MaxWidth(200)), targetTex);
+
+            EditorGUILayout.EndHorizontal();
+            #endregion
+
+            #region Event Mask 绘制
+            _labelStyle.normal.textColor = new Color(0, 0, 0);
+            EditorGUILayout.LabelField("Event Mask", _labelStyle);
+            for (int i = 0; i < MSetting.maskNames.Length;)
+            {
+                EditorGUILayout.BeginHorizontal();
+                for(int j = 0; j < MSetting.maskColumeCount; j++)
+                {
+                    if((i+j)>= MSetting.maskNames.Length)
+                    {
+                        break;
+                    }
+                    var trigger = EditorGUILayout.Toggle(MSetting.maskNames[i + j],
+                        nowClip.HasMaskBit(1 << (i + j)));
+                    if (trigger)
+                    {
+                        nowClip.AddMaskBit(1 << (i + j));
+                    }
+                    else
+                    {
+                        nowClip.RemoveMaskBit(1 << (i + j));
+                    }
+                }
+                i += MSetting.maskColumeCount;
+                EditorGUILayout.EndHorizontal();
+            }
+            #endregion
         }
 
         /// <summary>
@@ -86,7 +152,7 @@ namespace CLX.Dialogue
             var roleNames = MDialogue.dialogueClips.Select(clip => clip.roleName).Distinct();
             foreach(var roleName in roleNames)
             {
-                if (!MSetting.roles.Exists(role => role.roleName == roleName))
+                if (MSetting.GetRoleByName(roleName)==null)
                 {
                     missingName = roleName;
                     return false;
