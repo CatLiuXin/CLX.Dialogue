@@ -5,7 +5,7 @@ namespace CLX.Dialogue
 {
     public class DialogueMgr : Singleton<DialogueMgr>
     {
-        List<IDialogueMgrHelper> helpers = new List<IDialogueMgrHelper>();
+        List<IDialogueMgrRegister> registers = new List<IDialogueMgrRegister>();
         Dictionary<string, Role> roles = new Dictionary<string, Role>();
 
         /// <summary>
@@ -53,35 +53,35 @@ namespace CLX.Dialogue
         }
 
         /// <summary>
-        /// 注册一个IDialogueMgrHelper
+        /// 注册一个IDialogueMgrRegister
         /// </summary>
-        public void AddHelper(IDialogueMgrHelper helper)
+        public void AddRegister(IDialogueMgrRegister helper)
         {
-            helpers.Add(helper);
+            registers.Add(helper);
         }
 
         /// <summary>
-        /// 若勾选removeAll则清空所有Helper
-        /// 否则将位于selectedHelpers内的helper取消注册
+        /// 若勾选removeAll则清空所有Register
+        /// 否则将位于selectedHelpers内的Register取消注册
         /// </summary>
-        public void RemoveHelpers(bool removeAll=true,params IDialogueMgrHelper[] selectedHelpers)
+        public void RemoveRegisters(bool removeAll=true,params IDialogueMgrRegister[] selectedRegisters)
         {
             if (removeAll)
             {
-                helpers.Clear();
+                registers.Clear();
             }
             else
             {
-                selectedHelpers.ForEach(helper => helpers.Remove(helper));
+                selectedRegisters.ForEach(register => registers.Remove(register));
             }
         }
 
         /// <summary>
-        /// 将选中helper取消注册
+        /// 将选中Register取消注册
         /// </summary>
-        public void RemoveHelper(IDialogueMgrHelper helper)
+        public void RemoveRegister(IDialogueMgrRegister helper)
         {
-            helpers.Remove(helper);
+            registers.Remove(helper);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace CLX.Dialogue
         /// </summary>
         public void DoDialogue(Dialogue dialogue)
         {
-            helpers.ForEach(helper => helper.OnDialogueStart(dialogue));
+            registers.ForEach(helper => helper.OnDialogueStart(dialogue));
         }
     }
 }

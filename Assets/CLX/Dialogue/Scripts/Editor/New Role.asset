@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: New Role
   m_EditorClassIdentifier: 
   roleName: AAA
-  images: []
+  images:
+  - sprite: {fileID: 21300000, guid: 817979630d0607e439edfcaa64be3ca7, type: 3}
+    emotion: "\u5F00\u5FC3"
+  - sprite: {fileID: 21300000, guid: 4940f8bc6ab819d449af151c2bc667ca, type: 3}
+    emotion: "\u5FEB\u4E50"

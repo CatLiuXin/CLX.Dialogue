@@ -1,6 +1,6 @@
 ﻿namespace CLX.Dialogue
 {
-    public interface IDialogueMgrHelper
+    public interface IDialogueMgrRegister
     {
         void OnDialogueStart(Dialogue dialogue);
     }

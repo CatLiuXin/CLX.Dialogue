@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: New Dialogue
   m_EditorClassIdentifier: 
   dialogueClips:
+  - clipContext: "\u54CE\u5440~"
+    roleName: AAA
+    roleEmotion: "\u5FEB\u4E50"
+    eventMask: 0
   - clipContext: 
     roleName: AAA
-    roleEmotion: 
+    roleEmotion: "\u5F00\u5FC3"
     eventMask: 0
