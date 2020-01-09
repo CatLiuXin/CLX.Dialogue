@@ -12,6 +12,8 @@ namespace CLX.Dialogue
         private Dialogue nowDialogue;
         private IDialogueController dialogueController;
         private int nowClipNumber=0;
+        [SerializeField]
+        private DialogueSetting setting=null;
 
         public int NowClipNumber
         {
@@ -27,6 +29,14 @@ namespace CLX.Dialogue
         private void Awake()
         {
             DialogueMgr.Instance.AddRegister(this);
+            if(setting == null)
+            {
+                throw new MissingReferenceException("请导入setting文件！");
+            }
+            foreach(var role in setting.roles)
+            {
+                DialogueMgr.Instance.AddRole(role);
+            }
         }
 
         public void OnDialogueStart(Dialogue dialogue)
@@ -63,6 +73,11 @@ namespace CLX.Dialogue
             }
 
             NowClipNumber = clipCount;
+        }
+
+        public void ShowNextClip()
+        {
+            ClipSwitchTo(NowClipNumber + 1);
         }
 
         public void OnDialogueEnd()
