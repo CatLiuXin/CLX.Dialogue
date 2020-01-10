@@ -44,6 +44,11 @@ namespace CLX.Dialogue
             set {
                 if (mDialogue == value) return;
                 mDialogue = value;
+                EditorUtility.SetDirty(mDialogue);
+                if (mDialogue.dialogueClips == null)
+                {
+                    mDialogue.dialogueClips = new List<DialogueClip>();
+                }
                 if(mDialogue.dialogueClips.Count == 0)
                 {
                     AddClip(0);
@@ -77,11 +82,13 @@ namespace CLX.Dialogue
 
         private void OnGUI()
         {
-            EditorGUIUtility.labelWidth = 80f;
+            //EditorGUIUtility.labelWidth = 80f;
             GUILayout.Space(10);
+            var font = GUI.skin.label.fontSize;
             GUI.skin.label.fontSize = 24;
             GUI.skin.label.alignment = TextAnchor.MiddleCenter;
             GUILayout.Label(" CLX.Dialogue可视化编辑器 ");
+            GUI.skin.label.fontSize = font;
             EditorGUILayout.Space();
             EditorGUILayout.Space();
 
@@ -163,6 +170,9 @@ namespace CLX.Dialogue
             /// 绘制对白片段的信息
             EditorGUILayout.BeginVertical();
 
+            _labelStyle.normal.textColor = new Color(0.5f, 0, 0);
+            EditorGUILayout.LabelField(string.Format("现在正在编辑Clip:{0}",nowDialogueClipNumber), _labelStyle);
+
             var tmpName = nowClip.roleName;
             
             var nameId = EditorGUILayout.Popup("角色名", roleNameDict[tmpName], roleNameList,GUILayout.MaxWidth(400));
@@ -186,7 +196,9 @@ namespace CLX.Dialogue
             var emotionId = EditorGUILayout.Popup("表情", roleEmotionDict[nowClip.roleEmotion], roleEmotionList, GUILayout.MaxWidth(400));
             nowClip.roleEmotion = roleEmotionList[emotionId];
 
-            nowClip.clipContext = EditorGUILayout.TextField("对白内容", nowClip.clipContext, GUILayout.MaxWidth(400), GUILayout.MaxHeight(80));
+            _labelStyle.normal.textColor = new Color(0, 0, 0);
+            EditorGUILayout.LabelField("对白内容：", _labelStyle);
+            nowClip.clipContext = GUILayout.TextArea(nowClip.clipContext, GUILayout.MaxWidth(400), GUILayout.MaxHeight(50));
             #endregion
 
             #region 按钮绘制
@@ -251,9 +263,9 @@ namespace CLX.Dialogue
                 RemoveClip(nowDialogueClipNumber);
             }
 
-            if(nameBeforeChangeClip != MDialogue.dialogueClips[nowDialogueClipNumber].roleName)
+            if(nameBeforeChangeClip != nowRole.roleName)
             {
-                EmotionLoad(MSetting.GetRoleByName(MDialogue.dialogueClips[nowDialogueClipNumber].roleName));
+                EmotionLoad(MSetting.GetRoleByName(nowRole.roleName));
             }
 
             EditorGUILayout.EndHorizontal();
@@ -349,6 +361,14 @@ namespace CLX.Dialogue
                 roleEmotionList[i] = nowRole.images[i].emotion;
                 roleEmotionDict[nowRole.images[i].emotion] = i;
             }
+            
+        }
+
+        
+        private void OnDestroy()
+        {
+            if (mDialogue == null) return;
+            EditorUtility.SetDirty(mDialogue);
         }
     }
 

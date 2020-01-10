@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,10 +28,12 @@ namespace CLX.Dialogue
         /// </summary>
         private Dictionary<int, Action<DialogueClip>> onSpecialDialogueEnterDict = new Dictionary<int, Action<DialogueClip>>();
         private Dictionary<int, Action<DialogueClip>> onSpecialDialogueEndDict = new Dictionary<int, Action<DialogueClip>>();
+        private DialogueSamplePanel panel;
 
-        private void Start()
+        private void Awake()
         {
-            GetComponent<DialogueSamplePanel>().BindController(this);
+            panel = GetComponent<DialogueSamplePanel>();
+            panel.BindController(this);
         }
         public void OnDialogueClipEnd(DialogueClip clip)
         {
@@ -114,6 +115,16 @@ namespace CLX.Dialogue
                     mask &= (~tmpMask);
                 }
             }
+        }
+
+        public void ShowNextClip()
+        {
+            panel.ShowNextClip();
+        }
+
+        public void ClipSwitchTo(int clipCount)
+        {
+            panel.ClipSwitchTo(clipCount);
         }
     }
 }

@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a38ed6ee87d80c458153903f1e308cc, type: 3}
-  m_Name: New Dialogue Setting
+  m_Name: SampleSetting
   m_EditorClassIdentifier: 
   roles:
-  - {fileID: 11400000, guid: 1b49f29f203f5db4f8070c5ca6dea170, type: 2}
-  - {fileID: 11400000, guid: 07bdaa48698d20f49898da67920dd839, type: 2}
+  - {fileID: 11400000, guid: c350c3153f2418b4e9f21447fa42c5d3, type: 2}
+  - {fileID: 11400000, guid: 4256350ce30a75948ae8394e47852678, type: 2}
   maskNames:
-  - "\u5206\u652F"
-  - "\u53F3\u4FA7\u56FE\u50CF"
+  - "\u5206\u652F\u9009\u62E9"
   - "\u5206\u652F\u7ED3\u675F"
   maskColumeCount: 4

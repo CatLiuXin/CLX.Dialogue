@@ -1,5 +1,6 @@
 ﻿using CLX.Extensions.Generic;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace CLX.Dialogue
 {
@@ -7,6 +8,8 @@ namespace CLX.Dialogue
     {
         List<IDialogueMgrRegister> registers = new List<IDialogueMgrRegister>();
         Dictionary<string, Role> roles = new Dictionary<string, Role>();
+
+        DialogueMgr() { }
 
         /// <summary>
         /// 注册一个新Role
@@ -90,6 +93,15 @@ namespace CLX.Dialogue
         public void DoDialogue(Dialogue dialogue)
         {
             registers.ForEach(helper => helper.OnDialogueStart(dialogue));
+        }
+
+        /// <summary>
+        /// 更具roleName和emotion找到对应的Sprite，找不到则返回null
+        /// </summary>
+        public Sprite GetSpriteByRoleEmotion(string roleName,string emotion)
+        {
+            var role = GetRoleByName(roleName);
+            return (role == null) ? null : role.GetImageByEmotion(emotion).sprite;
         }
     }
 }

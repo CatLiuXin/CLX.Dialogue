@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CLX.Dialogue
 {
@@ -14,6 +12,8 @@ namespace CLX.Dialogue
         private int nowClipNumber=0;
         [SerializeField]
         private DialogueSetting setting=null;
+        [SerializeField]
+        private bool running = false;
 
         public int NowClipNumber
         {
@@ -41,6 +41,8 @@ namespace CLX.Dialogue
 
         public void OnDialogueStart(Dialogue dialogue)
         {
+            if (running) return;
+            running = true;
             dialogueController.OnDialogueEnter(dialogue);
             /// 此处不通过属性修改，因为通过属性修改的话无法区分Number的变化原因
             /// 有两种将nowClipNumber变化为0的情况
@@ -48,6 +50,7 @@ namespace CLX.Dialogue
             /// 2. 从一个对白的某个片段跳转到第0个片段
             /// 此为第一种情况，需要手动调用ClipEnter事件
             nowClipNumber = 0;
+            nowDialogue = dialogue;
             OnDialogueClipEnter(nowDialogue.dialogueClips[0]);
         }
 
@@ -68,6 +71,7 @@ namespace CLX.Dialogue
         {
             if(clipCount<0 || clipCount >= nowDialogue.dialogueClips.Count)
             {
+                OnDialogueClipEnd(nowDialogue.dialogueClips[NowClipNumber]);
                 OnDialogueEnd();
                 return;
             }
@@ -82,6 +86,7 @@ namespace CLX.Dialogue
 
         public void OnDialogueEnd()
         {
+            running = false;
             OnDialogueClipEnd(nowDialogue.dialogueClips[nowClipNumber]);
             dialogueController.OnDialogueEnd(nowDialogue);
             nowDialogue = null;
