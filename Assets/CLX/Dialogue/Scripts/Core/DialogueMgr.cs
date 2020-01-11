@@ -96,7 +96,7 @@ namespace CLX.Dialogue
         }
 
         /// <summary>
-        /// 更具roleName和emotion找到对应的Sprite，找不到则返回null
+        /// 根据roleName和emotion找到对应的Sprite，找不到则返回null
         /// </summary>
         public Sprite GetSpriteByRoleEmotion(string roleName,string emotion)
         {

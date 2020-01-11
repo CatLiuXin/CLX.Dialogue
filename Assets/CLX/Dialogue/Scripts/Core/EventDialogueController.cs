@@ -15,6 +15,12 @@ namespace CLX.Dialogue
      *      值得注意的是，执行Enter系列事件的时候，OnDilogueClip的顺序在OnSpecialDialogue之前
      *      而End系列事件反之
      * 最后执行OnDialogueEnter事件
+     * 
+     * 另外，具体实现上，第一个对白的OnSpecialDialogueEnter事件会在OnDialogueClipEnter事件执行完后马上执行
+     * 而每一段对白片段的OnSpecialDialogueEnter事件会在OnDialogueClipEnter事件后马上执行
+     * OnSpecialDialogueEnd会在切换当前对白片段的时候执行
+     * OnDialogueClipEnd会在OnSpecialDialogueEnd事件结束后执行
+     * 
      */
     public class EventDialogueController : MonoBehaviour, IDialogueController
     {
@@ -121,7 +127,9 @@ namespace CLX.Dialogue
         {
             panel.ShowNextClip();
         }
-
+        /// <summary>
+        /// 切换到clipCount个片段 若输入的片段号不合法 则触发结束对白事件
+        /// </summary>
         public void ClipSwitchTo(int clipCount)
         {
             panel.ClipSwitchTo(clipCount);

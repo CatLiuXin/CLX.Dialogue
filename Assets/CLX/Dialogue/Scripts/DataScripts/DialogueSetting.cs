@@ -10,11 +10,14 @@ namespace CLX.Dialogue
     [CreateAssetMenu(menuName = "CLX/Dialogue/Create Dialogue Setting")]
     public class DialogueSetting : ScriptableObject
     {
+        /// 用于记录登场的所有角色
         public List<Role> roles;
+        /// 特殊对白标记的提示名
+        /// 编辑器使用时提示用户的作用
         public string[] maskNames;
 
         /// <summary>
-        /// 编辑器上每行应有的mask数量
+        /// 编辑器上每行最多的mask数量
         /// </summary>
         [Range(1, 32)]
         public short maskColumeCount = 4;

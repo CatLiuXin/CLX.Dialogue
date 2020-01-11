@@ -39,6 +39,9 @@ namespace CLX.Dialogue
             }
         }
 
+        /// 因为DialogueSamplePanel类实现了IDialogueMgrRegister接口
+		/// 这个方法会被注册到DialogueMgr实例去
+		/// 它会调用后面注册到的IDilogueController的OnDialogueEnter方法
         public void OnDialogueStart(Dialogue dialogue)
         {
             if (running) return;
@@ -53,6 +56,7 @@ namespace CLX.Dialogue
             nowDialogue = dialogue;
             OnDialogueClipEnter(nowDialogue.dialogueClips[0]);
         }
+
 
         private void OnDialogueClipEnter(DialogueClip clip)
         {
@@ -79,6 +83,9 @@ namespace CLX.Dialogue
             NowClipNumber = clipCount;
         }
 
+        /// <summary>
+        /// 切换到下一个对白片段，若在这之后没有对白片段了，则结束对白
+        /// </summary>
         public void ShowNextClip()
         {
             ClipSwitchTo(NowClipNumber + 1);
