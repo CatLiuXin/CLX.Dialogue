@@ -141,6 +141,8 @@
 
 ![Role文件](<https://raw.githubusercontent.com/CatLiuXin/Pics/master/CLX.Dialogue/Role%E6%96%87%E4%BB%B6.png>)
 
+* 导入图片时必须要勾选Read/Write Enable
+
 ##### Setting文件
 
 ![img](https://raw.githubusercontent.com/CatLiuXin/Pics/master/CLX.Dialogue/Setting%E6%96%87%E4%BB%B6.png)
@@ -353,3 +355,9 @@
 ​	在CLX/Dialogue/Sample文件夹中有着演示的场景的所有资源与代码，各位可以打开进行学习。
 
 ​	示例中实现了一个简易的，分支语句功能，希望能够对各位有所启示。
+
+### 值得注意的事情
+
+1.  导入图片时必须要勾选Read/Write Enable。
+2.  因为Role等脚本继承自ScriptableObject，ScriptableObject中有一个name属性，而往往我们不会使用这个属性而想使用比如roleName属性。
+3. 如果Sprite进行了分割后，不能将其整体作为一个Sprite来使用了，使用的话只会显示分割的第一个图片。
