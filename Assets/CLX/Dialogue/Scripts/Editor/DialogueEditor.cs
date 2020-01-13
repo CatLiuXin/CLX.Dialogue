@@ -82,7 +82,8 @@ namespace CLX.Dialogue
 
         private void OnGUI()
         {
-            //EditorGUIUtility.labelWidth = 80f;
+            var tmpWidth = EditorGUIUtility.labelWidth;
+            EditorGUIUtility.labelWidth = 80;
             GUILayout.Space(10);
             var font = GUI.skin.label.fontSize;
             GUI.skin.label.fontSize = 24;
@@ -198,7 +199,10 @@ namespace CLX.Dialogue
 
             _labelStyle.normal.textColor = new Color(0, 0, 0);
             EditorGUILayout.LabelField("对白内容：", _labelStyle);
-            nowClip.clipContext = GUILayout.TextArea(nowClip.clipContext, GUILayout.MaxWidth(400), GUILayout.MaxHeight(50));
+
+            EditorStyles.textField.wordWrap = true;
+            nowClip.clipContext = EditorGUILayout.TextArea(nowClip.clipContext, GUILayout.MaxWidth(400), GUILayout.MaxHeight(50));
+            EditorStyles.textField.wordWrap = false;
             #endregion
 
             #region 按钮绘制
@@ -283,20 +287,34 @@ namespace CLX.Dialogue
             #region Event Mask 绘制
             _labelStyle.normal.textColor = new Color(0, 0, 0);
             EditorGUILayout.LabelField("Event Mask", _labelStyle);
-            for (int i = 0; i < MSetting.maskNames.Length;)
+            for (int i = 0; i < MSetting.maskInfos.Length;)
             {
                 EditorGUILayout.BeginHorizontal();
                 for(int j = 0; j < MSetting.maskColumeCount; j++)
                 {
-                    if((i+j)>= MSetting.maskNames.Length)
+                    if((i+j)>= MSetting.maskInfos.Length)
                     {
                         break;
                     }
-                    var trigger = EditorGUILayout.Toggle(MSetting.maskNames[i + j],
-                        nowClip.HasMaskBit(1 << (i + j)));
+                    var trigger = EditorGUILayout.Toggle(MSetting.maskInfos[i + j].maskName,
+                        nowClip.HasMaskBit(1 << (i + j)),GUILayout.MaxWidth(100));
                     if (trigger)
                     {
+                        var resourceType = MSetting.maskInfos[i + j].type;
                         nowClip.AddMaskBit(1 << (i + j));
+                        if(resourceType != DialogueResourceType.None)
+                        {
+                            var type = DialogueSetting.GetTypeByResourceType(resourceType);
+                            var obj = nowClip.GetDialogueObjectByMaskBit(1 << (i + j));
+                            if(obj == null || obj.GetType() == type)
+                            {
+                                nowClip.SetDialogueObjectByMaskBit((1 << (i + j)), EditorGUILayout.ObjectField(obj, type, false, GUILayout.MaxWidth(80)));
+                            }
+                            else
+                            {
+                                throw new System.Exception(string.Format($"此对白片段属于{MSetting.maskInfos[i + j].type}特殊标记的资源类型和Setting文件中指定的不一样，请确认后再打开！"));
+                            }
+                        }
                     }
                     else
                     {
@@ -308,8 +326,7 @@ namespace CLX.Dialogue
             }
             #endregion
 
-
-            EditorGUIUtility.labelWidth = 0;
+            EditorGUIUtility.labelWidth = tmpWidth;
         }
 
         /// <summary>

@@ -15,7 +15,13 @@ MonoBehaviour:
   roles:
   - {fileID: 11400000, guid: c350c3153f2418b4e9f21447fa42c5d3, type: 2}
   - {fileID: 11400000, guid: 4256350ce30a75948ae8394e47852678, type: 2}
-  maskNames:
-  - "\u5206\u652F\u9009\u62E9"
-  - "\u5206\u652F\u7ED3\u675F"
+  maskInfos:
+  - maskName: "\u5206\u652F\u8BED\u53E5"
+    type: 0
+  - maskName: "\u7ED3\u675F\u8BED\u53E5"
+    type: 0
+  - maskName: "\u80CC\u666F\u97F3\u4E50"
+    type: 1
+  - maskName: "\u5207\u6362\u80CC\u666F\u56FE\u7247"
+    type: 2
   maskColumeCount: 4

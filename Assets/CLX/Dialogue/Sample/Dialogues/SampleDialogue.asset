@@ -16,17 +16,26 @@ MonoBehaviour:
   - clipContext: "\u4F60\u597D\u554A\uFF0C\u6211\u53EB\u6CEA\u773C\u8725~\u5F88\u9AD8\u5174\u8BA4\u8BC6\u4F60\uFF0C\u8BF7\u95EE\u4F60\u53EB\u4EC0\u4E48\u540D\u5B57\u5462\uFF1F"
     roleName: "\u6CEA\u773C\u8725"
     roleEmotion: "\u5E38\u89C4"
-    eventMask: 0
+    eventMask: 4
+    maskObjs:
+    - {fileID: 8300000, guid: f11c3567b51608c4f81d11c0c7cb630e, type: 3}
+    objMaskBits: 04000000
   - clipContext: "\u4F60\u7684\u9009\u62E9*2 \u6211\u53EB\u505A\u82F1\u68A8\u68A8\uFF0C\u5F88\u9AD8\u5174\u8BA4\u8BC6\u4F60~*3
       \u4E0D\u597D\u610F\u601D\uFF0C\u6211\u5E76\u4E0D\u60F3\u544A\u8BC9\u4F60\u6211\u7684\u540D\u5B57\u3002"
     roleName: "\u82F1\u68A8\u68A8"
     roleEmotion: "\u5E38\u89C4"
     eventMask: 1
+    maskObjs: []
+    objMaskBits: 
   - clipContext: "\u8BA4\u8BC6\u4F60\u771F\u5F00\u5FC3~"
     roleName: "\u6CEA\u773C\u8725"
     roleEmotion: "\u5E38\u89C4"
     eventMask: 2
+    maskObjs: []
+    objMaskBits: 
   - clipContext: "\u62B1\u6B49\uFF0C\u6253\u6270\u4E86~"
     roleName: "\u6CEA\u773C\u8725"
     roleEmotion: "\u5E38\u89C4"
     eventMask: 2
+    maskObjs: []
+    objMaskBits: 
