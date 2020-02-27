@@ -48,6 +48,24 @@
 
 ## 项目简易文档
 
+### 总体设计说明图
+
+#### 全图
+
+![img](https://raw.githubusercontent.com/CatLiuXin/Pics/master/CLX.Dialogue/%E6%80%BB%E4%BD%93%E8%AE%BE%E8%AE%A1.png)
+
+#### 基础数据类说明图
+
+![img](https://raw.githubusercontent.com/CatLiuXin/Pics/master/CLX.Dialogue/%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB.png)
+
+#### 编辑器设计说明图
+
+![img](https://raw.githubusercontent.com/CatLiuXin/Pics/master/CLX.Dialogue/%E7%BC%96%E8%BE%91%E5%99%A8%E8%AE%BE%E8%AE%A1.png)
+
+#### 主要系统类/接口说明图
+
+![img](https://raw.githubusercontent.com/CatLiuXin/Pics/master/CLX.Dialogue/%E4%B8%BB%E8%A6%81%E7%B3%BB%E7%BB%9F%E7%B1%BB.png)
+
 ### 数据类型
 
 ​	数据类型是整个插件的基础，都处于 `CLX/Dialogue/Scripts/DataScripts` 文件夹内，主要包括下面三个类型：
